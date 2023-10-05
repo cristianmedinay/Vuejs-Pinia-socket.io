@@ -6,7 +6,7 @@ class SocketioService {
 
   setupSocketConnection() {
     this.socket = io('ws://localhost:4000');
-    this.socket.emit('howdy', 'Hello there from Vue.');
+    
 
     return this.socket;
   }

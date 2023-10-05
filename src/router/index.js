@@ -7,17 +7,45 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: HomeView,
+      meta: { private: false }
     },
     {
       path: '/about',
       name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
+      meta: { private: false },
       component: () => import('../views/AboutView.vue')
+    },
+    {
+      path: '/chat',
+      name: 'chat',
+      meta: { private: true },
+      component: () => import('../views/ChatHome.vue')
+    },
+    {
+      path: '/login',
+      name: 'login',
+      meta: { private: false },
+      component: () => import('../views/Login.vue')
+    },
+    {
+      path: '/dashboard',
+      name: 'dashboard',
+      meta: { private: true },
+      component: () => import('../views/Dashboard.vue')
     }
   ]
+})
+
+router.beforeEach((to,from,next)=>{
+  const auth = localStorage.getItem('myCat');
+  const needAuth = to.meta.private
+ 
+  if((to.path != "/login") && (needAuth && !auth)){
+      next({path:'login'})
+  }else{
+      next()
+  }
 })
 
 export default router

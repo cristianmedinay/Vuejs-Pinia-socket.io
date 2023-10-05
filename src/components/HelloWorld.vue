@@ -1,5 +1,5 @@
 <script setup>
-import io from 'socket.io-client'
+
 /* const socket = io("http://localhost:3000") */
 //import { state } from "@/socket";
 defineProps({
@@ -12,9 +12,11 @@ defineProps({
 </script>
 
 <template>
-  <div class="greetings">
-    <h1 class="green">{{ msg }}</h1>
-    <p>State: {{ connected }}</p>
+
+
+  <div>
+    <p> Client list </p>
+   
   </div>
 </template>
 

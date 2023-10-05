@@ -1,54 +1,59 @@
 
 
-<script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
-
-</script>
-
 <template>
   <header>
     <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
+    <button @click="fnIncrement()">aumentar</button>
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="/chat">ChatHome</RouterLink>
+        <RouterLink to="/login">Login</RouterLink>
       </nav>
     </div>
   </header>
-
   <RouterView />
 </template>
-<script>
+
+<script >
+import { RouterLink, RouterView } from 'vue-router'
 import SocketioService from '../src/service/socket.service';
 
 export default {
-    name:"App",
+  name:"App",
+    setup(){
+      const socket = SocketioService.setupSocketConnection();
 
+      const fnIncrement = ()=>{
+        socket.emit('increment', 'Hello there from Vue.');
+      }
+      return {
+        fnIncrement
+      }
+    },
     components: {
+
+    },
+    mounted() {
+    /*   socket.on("welcome", (data) => {
+        
+        console.log(data)
+      });
+    */
     },
 
-    mounted() {
-    const socket = SocketioService.setupSocketConnection();
-    socket.on("welcome", (data) => {
-      
-      console.log(data)
-    });
-
-  },
+}
+ 
 /*   created() {
     SocketioService.setupSocketConnection();
   },
   beforeUnmount() {
     SocketioService.disconnect();
   } */
-}
-
-
 </script>
+
+
 <style scoped>
 header {
   line-height: 1.5;
